@@ -10,9 +10,10 @@ The ETL pipeline should extract songs and user log data from S3, processes it us
 
 # Example queries and results for song play analysis.
 - Analyze songs of a given artist - 
+```
   song_plays_schema = StructType([])
   df =  spark.read.json(output_data + "log_output/songplays.parquet", schema=song_plays_schema)
   df.createOrReplaceTempView("songplays")
   resultDf = spark.sql('SELECT * FROM songplays where artist_id = "AR5KOSW1187FB35FF4"')
   resultDf.show(5)
-
+```
