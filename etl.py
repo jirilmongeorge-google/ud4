@@ -16,6 +16,9 @@ os.environ['AWS_SECRET_ACCESS_KEY']=config['AWS']['AWS_SECRET_ACCESS_KEY']
 
 
 def create_spark_session():
+    """
+    Create a Spark session
+    """
     spark = SparkSession \
         .builder \
         .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:2.7.0") \
@@ -24,6 +27,17 @@ def create_spark_session():
 
 
 def process_song_data(spark, input_data, output_data):
+    """
+    Transform raw song data from S3 into more granular dimensional tables(parquet) on S3
+    
+    This function reads in song data in JSON format from S3; defines the schema
+    of songs and artists tables and then processes the raw data into
+    these dimensional tables; and then writes the tables into partitioned parquet files on AWS S3.    
+    Args:
+        spark: a Spark session object
+        input_data: an S3 bucket to read input song data  
+        output_data: an S3 bucket to write output dimensional tables 
+    """
     # get filepath to song data file
     song_data = input_data + "song_data/*/*/*/*.json"
     
@@ -69,6 +83,17 @@ def process_song_data(spark, input_data, output_data):
 
 
 def process_log_data(spark, input_data, output_data):
+    """
+    Transform raw log data from S3 into more granular dimensional tables(parquet) on S3
+    
+    This function reads in user log data in JSON format from S3; defines the schema
+    of users, time and songs_play tables and then processes the raw data into
+    these dimensional tables; and then writes the tables into partitioned parquet files on AWS S3.    
+    Args:
+        spark: a Spark session object
+        input_data: an S3 bucket to read input user log data  
+        output_data: an S3 bucket to write output dimensional tables 
+    """
     # get filepath to log data file
     log_data = input_data + "log_data/*/*/*.json"
 
@@ -191,6 +216,9 @@ def process_log_data(spark, input_data, output_data):
 
 
 def main():
+    """
+    Main function to Initiate the ETL pipeline
+    """
     spark = create_spark_session()
     input_data = "s3a://udacity-dend/"
     output_data = "s3a://udacity-dend-out999/"
