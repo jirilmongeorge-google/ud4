@@ -5,7 +5,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import udf, col
 from pyspark.sql import functions as F
 from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, date_format
-from pyspark.sql.types import (StructType, StructField, StringType, DoubleType, IntegerType, TimestampType)
+from pyspark.sql.types import (StructType, StructField, StringType, DoubleType, IntegerType, TimestampType, DateType)
 
 
 config = configparser.ConfigParser()
