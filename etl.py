@@ -59,6 +59,7 @@ def process_song_data(spark, input_data, output_data):
 
     # extract columns to create songs table
     songs_table = df.select("song_id", "title", "artist_id", "year", "duration")
+    songs_table = songs_table.distinct()
     
     # write songs table to parquet files partitioned by year and artist
     songs_table.write.parquet(
@@ -209,6 +210,7 @@ def process_log_data(spark, input_data, output_data):
             "month"
         ).withColumn("songplay_id", F.monotonically_increasing_id())
     )
+    songplays_table = songplays_table.distinct()
     songplays_table.write.parquet(
         output_data + "log_output/songplays.parquet",
         mode = "overwrite",
